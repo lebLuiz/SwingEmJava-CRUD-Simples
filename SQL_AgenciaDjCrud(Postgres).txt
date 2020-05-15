@@ -1,0 +1,92 @@
+##TABELA LOGIN##
+create table login (
+    idl serial not null,
+  	usuario varchar (50),
+    senha varchar(15),
+    
+    constraint id_pk_login primary key(idl)
+)
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+##TABELA CLIENTE##
+create table cliente (
+    idcliente serial primary key,
+    nome varchar(60),
+    sexo char(1),
+    status char(1),
+
+    constraint ch_sexo check (sexo in('F', 'M'))
+)
+
+
+##TABELA CLIENTE_AGENCIADJ##
+create table cliente_agenciadj(
+    id_cliente_agencia serial primary key,
+    idcliente serial,
+    foreign key (idcliente) references cliente (idcliente),
+    nome_cliente_agencia varchar(60),
+    email varchar(50),
+    contato varchar(20)
+)
+
+##TABELA AGENCIADJ##
+create table agencia(
+    idagencia serial primary key,
+    id_cliente_agencia serial,
+    foreign key(id_cliente_agencia) references cliente_agenciadj(id_cliente_agencia),
+    nomeagencia varchar(50),
+    email varchar(50),
+    cnpj char(18),
+    localizacao varchar(60),
+    funcionarios varchar(100)
+)
+
+##TABELA CLIENTE_EVENTO##
+create table cliente_evento(
+    id_cliente_evento serial primary key,
+    idcliente serial,
+    foreign key (idcliente) references cliente(idcliente),
+    nome_cliente_evento varchar(60),
+    email varchar(50),
+    contato varchar(20),
+    contrato varchar(100)	 
+)
+
+##TABELA EVENTO##
+create table evento(
+    idevento serial primary key,
+    id_cliente_evento serial,
+    foreign key(id_cliente_evento) references cliente_evento(id_cliente_evento),
+    nomeevento varchar(50),
+    responsaveis varchar(70),
+    local_ varchar(70),
+    alvara varchar(60),
+    quantartistas char(3),
+    seguranca varchar(50),
+    datainic varchar(10),
+    datafim varchar(10),
+    artistas varchar(100),
+    hotelparaartista varchar(50)
+)
+
+
+
+
+
+
+
+
+
+
+##OUTRAS COISAS DE TESTES##
+select * from cliente_evento 
+select idevento from agenciadj inner join cliente_evento on agenciadj.idevento=cliente_evento.idevento
+
+ALTER TABLE cliente_evento
+    ALTER COLUMN datainic TYPE varchar(10),
+    ALTER COLUMN datafim TYPE varchar(10);
+####################################################
